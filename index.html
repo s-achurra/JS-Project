@@ -9,7 +9,8 @@
     <script>
     function init() {
 
-      var stage = new createjs.Stage("board");
+      board = document.getElementById("board");
+      var stage = new createjs.Stage(board);
 
       var cannon = new createjs.Shape();
       cannon.graphics.beginFill("DeepSkyBlue").drawRect(0, 0, 100, 50);
@@ -22,7 +23,8 @@
       var KEYCODE_LEFT = 37,
         KEYCODE_RIGHT = 39,
         KEYCODE_UP = 38,
-        KEYCODE_DOWN = 40;
+        KEYCODE_DOWN = 40,
+        SPACE = 32;
 
       function keyPressed(event) {
         switch(event.keyCode) {
@@ -32,6 +34,9 @@
           case KEYCODE_RIGHT:
             cannon.x += 5;
             break;
+          case SPACE:
+            createLaser(cannon.x + 50);
+            break;
           // case KEYCODE_UP:
           //   cannon.y -= 5;
           //   break;
@@ -40,6 +45,23 @@
           //   break;
         }
         stage.update();
+      }
+
+      function createLaser (x) {
+        var laser = new createjs.Shape();
+        laser.graphics.beginFill("Green").drawRect(0,0,5,20);
+        laser.x = x;
+        laser.y = 680;
+        stage.addChild(laser);
+        handleLaserTick(laser);
+      }
+
+      createjs.Ticker.addEventListener("tick", handleLaserTick);
+
+      function handleLaserTick(laser) {
+          laser.y -= 10;
+          if (laser.y < 0) { stage.removeChild(laser) }
+          stage.update();
       }
 
       this.document.onkeydown = keyPressed;
