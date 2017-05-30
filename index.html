@@ -47,6 +47,21 @@
         stage.update();
       }
 
+
+      function handleLaserTick(laser) {
+          createjs.Ticker.addEventListener("tick", moveLaser);
+
+          function moveLaser() {
+            laser.y -= 10;
+            console.log("here");
+            if (laser.y < 0) {
+              stage.removeChild(laser);
+              Ticker.removeAllEventListeners("tick");
+             }
+            stage.update();
+          }
+      }
+
       function createLaser (x) {
         var laser = new createjs.Shape();
         laser.graphics.beginFill("Green").drawRect(0,0,5,20);
@@ -54,14 +69,6 @@
         laser.y = 680;
         stage.addChild(laser);
         handleLaserTick(laser);
-      }
-
-      createjs.Ticker.addEventListener("tick", handleLaserTick);
-
-      function handleLaserTick(laser) {
-          laser.y -= 10;
-          if (laser.y < 0) { stage.removeChild(laser) }
-          stage.update();
       }
 
       this.document.onkeydown = keyPressed;
