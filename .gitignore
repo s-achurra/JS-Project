@@ -1,0 +1,12 @@
+# Ignore bundler config.
+/.bundle
+
+# Ignore bundle
+bundle.js
+bundle.js.map
+
+# Ignore all logfiles and tempfiles.
+/log/*
+!/log/.keep
+/tmp
+npm-debug.log
