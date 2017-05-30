@@ -30,10 +30,14 @@
       function keyPressed(event) {
         switch(event.keyCode) {
           case KEYCODE_LEFT:
+          if (cannon.x - 5 > 0) {
             cannon.x -= 5;
+          }
             break;
           case KEYCODE_RIGHT:
+          if (cannon.x + 100 + 5 < board.width) {
             cannon.x += 5;
+          }
             break;
           case SPACE:
             createLaser(cannon.x + 50);
