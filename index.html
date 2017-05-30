@@ -3,18 +3,19 @@
   <head>
     <meta charset="utf-8">
     <title>Space Invaders</title>
+    <link rel = "stylesheet" type = "text/css" href = "./css/stylesheet.css" />
     <script src="https://code.createjs.com/easeljs-0.8.2.min.js"></script>
 
     <script>
     function init() {
 
-      var stage = new createjs.Stage("demoCanvas");
+      var stage = new createjs.Stage("board");
 
-      var circle = new createjs.Shape();
-      circle.graphics.beginFill("DeepSkyBlue").drawCircle(0, 0, 50);
-      circle.x = 100;
-      circle.y = 100;
-      stage.addChild(circle);
+      var cannon = new createjs.Shape();
+      cannon.graphics.beginFill("DeepSkyBlue").drawRect(0, 0, 100, 50);
+      cannon.x = 250;
+      cannon.y = 700;
+      stage.addChild(cannon);
 
       stage.update();
 
@@ -24,20 +25,19 @@
         KEYCODE_DOWN = 40;
 
       function keyPressed(event) {
-        console.log("here");
         switch(event.keyCode) {
           case KEYCODE_LEFT:
-            circle.x -= 5;
+            cannon.x -= 5;
             break;
           case KEYCODE_RIGHT:
-            circle.x += 5;
+            cannon.x += 5;
             break;
-          case KEYCODE_UP:
-            circle.y -= 5;
-            break;
-          case KEYCODE_DOWN:
-            circle.y += 5;
-            break;
+          // case KEYCODE_UP:
+          //   cannon.y -= 5;
+          //   break;
+          // case KEYCODE_DOWN:
+          //   cannon.y += 5;
+          //   break;
         }
         stage.update();
       }
@@ -50,7 +50,7 @@
   </head>
   <body onload="init();">
 
-    <canvas id="demoCanvas" width="500" height="300"></canvas>
+    <canvas id="board" width="600" height="800"></canvas>
 
 
   </body>
