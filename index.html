@@ -75,6 +75,31 @@
         handleLaserTick(laser);
       }
 
+      function setupAliens() {
+        let x = 20;
+        let y = 20;
+
+        for (var j = 0; j < 3; j++) {
+          for (var i = 0; i < 5; i++) {
+            createAlien(x, y);
+            x += 100;
+          }
+          x = 20;
+          y += 100;
+        }
+        stage.update();
+      }
+
+      function createAlien(x, y) {
+        var alien = new createjs.Shape();
+        alien.graphics.beginFill("Red").drawRect(0,0,50,50);
+        alien.x = x;
+        alien.y = y;
+        stage.addChild(alien);
+      }
+
+      setupAliens();
+
       this.document.onkeydown = keyPressed;
 
     }
@@ -83,6 +108,8 @@
   </head>
   <body onload="init();">
 
+    <img class="logo" src="./res/Space_invaders_logo.png"/>
+    <br />
     <canvas id="board" width="600" height="800"></canvas>
 
 

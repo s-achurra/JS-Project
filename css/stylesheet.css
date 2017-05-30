@@ -1,9 +1,15 @@
 body {
   display: flex;
-  justify-content: center;
+  align-items: center;
+  flex-direction: column;
   background-image: url("http://space-facts.com/wp-content/uploads/magellanic-clouds.png");
 }
 
 canvas {
   border: 1px solid white;
+}
+
+img.logo {
+  width: 300px;
+  height: auto;
 }
