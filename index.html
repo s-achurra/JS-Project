@@ -3,9 +3,55 @@
   <head>
     <meta charset="utf-8">
     <title>Space Invaders</title>
+    <script src="https://code.createjs.com/easeljs-0.8.2.min.js"></script>
+
+    <script>
+    function init() {
+
+      var stage = new createjs.Stage("demoCanvas");
+
+      var circle = new createjs.Shape();
+      circle.graphics.beginFill("DeepSkyBlue").drawCircle(0, 0, 50);
+      circle.x = 100;
+      circle.y = 100;
+      stage.addChild(circle);
+
+      stage.update();
+
+      var KEYCODE_LEFT = 37,
+        KEYCODE_RIGHT = 39,
+        KEYCODE_UP = 38,
+        KEYCODE_DOWN = 40;
+
+      function keyPressed(event) {
+        console.log("here");
+        switch(event.keyCode) {
+          case KEYCODE_LEFT:
+            circle.x -= 5;
+            break;
+          case KEYCODE_RIGHT:
+            circle.x += 5;
+            break;
+          case KEYCODE_UP:
+            circle.y -= 5;
+            break;
+          case KEYCODE_DOWN:
+            circle.y += 5;
+            break;
+        }
+        stage.update();
+      }
+
+      this.document.onkeydown = keyPressed;
+
+    }
+
+    </script>
   </head>
-  <body>
-    <canvas></canvas>
-    
+  <body onload="init();">
+
+    <canvas id="demoCanvas" width="500" height="300"></canvas>
+
+
   </body>
 </html>
