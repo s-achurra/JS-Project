@@ -13,18 +13,25 @@
       board = document.getElementById("board");
       var stage = new createjs.Stage(board);
 
+      var aliens = [];
+      var lasers = [];
+      var timeouts = [];
+      var status = "PLAY";
+      var playerScore = 0;
+
       var cannon = new createjs.Shape();
       cannon.graphics.beginFill("DeepSkyBlue").drawRect(0, 0, 100, 50);
       cannon.x = 250;
       cannon.y = 700;
       stage.addChild(cannon);
 
-      stage.update();
+      var score = new createjs.Text("Score: "+playerScore, "20px Arial", "#ffffff");
+      score.x = 20;
+      score.y = 20;
+      score.textBaseline = "alphabetic";
+      stage.addChild(score);
 
-      var aliens = [];
-      var lasers = [];
-      var timeouts = [];
-      var status = "PLAY";
+      stage.update();
 
       var KEYCODE_LEFT = 37,
         KEYCODE_RIGHT = 39,
@@ -71,16 +78,20 @@
                 var pt = laser.localToLocal(0, 0, aliens[i]);
                 // Check if Hit and remove if Hit
                 if (aliens[i].hitTest(pt.x, pt.y)) {
+                  playerScore += 10;
+                  score.text = "Score: " + playerScore;
+                  stage.update();
                   stage.removeChild(aliens[i]);
                   stage.removeChild(laser);
                   aliens.splice(i, 1);
                   laser.y = -20;
+
                   if (aliens.length === 0) {
                     console.log("you win!");
                     status = "WON";
                     pauseGame();
-                    console.log(timeouts);
                   }
+
                 }
               }
               handleLaserTick(laser);
