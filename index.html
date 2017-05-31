@@ -21,6 +21,9 @@
 
       stage.update();
 
+      var aliens = [];
+      var lasers = [];
+
       var KEYCODE_LEFT = 37,
         KEYCODE_RIGHT = 39,
         SPACE = 32;
@@ -46,6 +49,16 @@
 
       // laser stuff
 
+      function createLaser (x) {
+        var laser = new createjs.Shape();
+        laser.graphics.beginFill("Green").drawRect(0,0,5,20);
+        laser.x = x;
+        laser.y = 680;
+        stage.addChild(laser);
+        lasers.push(laser)
+        handleLaserTick(laser);
+      }
+
       function handleLaserTick(laser) {
         setTimeout(function () {
           laser.y -= 10;
@@ -54,37 +67,8 @@
                handleLaserTick(laser);
             }
          }, 50)
+         console.log(lasers);
        }
-        // function moveLaser(laser) {
-        //   setTimeout(function(laser){
-        //     if (laser.y > -20) {
-        //       console.log("here");
-        //       moveLaser(laser);
-        //     }
-        //   }, 3000);
-        //
-        // moveLaser(laser);
-
-        // }
-
-        // var Ticker = createjs.Ticker.addEventListener("tick", moveLaser);
-        //
-        // function moveLaser() {
-        //   if (laser.y > -20) {
-        //     laser.y -= 10;
-        //     stage.update();
-        //   }
-        // }
-      // }
-
-      function createLaser (x) {
-        var laser = new createjs.Shape();
-        laser.graphics.beginFill("Green").drawRect(0,0,5,20);
-        laser.x = x;
-        laser.y = 680;
-        stage.addChild(laser);
-        handleLaserTick(laser);
-      }
 
       // alien stuff
 
@@ -103,6 +87,17 @@
         stage.update();
       }
 
+
+      function createAlien(x, y) {
+        alien = new createjs.Shape();
+        alien.graphics.beginFill("Red").drawRect(0,0,50,50);
+        alien.x = x;
+        alien.y = y;
+        aliens.push(alien);
+        stage.addChild(alien);
+        handleAlienTick(alien); //toggled off alien movement
+      }
+
       function handleAlienTick(alien) {
         setTimeout(function () {
           if (alien.x + 10 + 50 < 600) {
@@ -113,18 +108,10 @@
             alien.y += 100;
             alien.x = 20;
             stage.update();
-            handleAlienTick(alien);
+            // handleAlienTick(alien);
           }
-        }, 200)
-       }
-
-      function createAlien(x, y) {
-        var alien = new createjs.Shape();
-        alien.graphics.beginFill("Red").drawRect(0,0,50,50);
-        alien.x = x;
-        alien.y = y;
-        stage.addChild(alien);
-        // handleAlienTick(alien); //toggled off alien movement
+        }, 50)
+        console.log(aliens[0].x);
       }
 
       setupAliens();
