@@ -23,8 +23,6 @@
 
       var KEYCODE_LEFT = 37,
         KEYCODE_RIGHT = 39,
-        KEYCODE_UP = 38,
-        KEYCODE_DOWN = 40,
         SPACE = 32;
 
       function keyPressed(event) {
@@ -42,29 +40,42 @@
           case SPACE:
             createLaser(cannon.x + 50);
             break;
-          // case KEYCODE_UP:
-          //   cannon.y -= 5;
-          //   break;
-          // case KEYCODE_DOWN:
-          //   cannon.y += 5;
-          //   break;
         }
         stage.update();
       }
 
+      // laser stuff
 
       function handleLaserTick(laser) {
-          var Ticker = createjs.Ticker.addEventListener("tick", moveLaser);
+        setTimeout(function () {
+          laser.y -= 10;
+          stage.update();
+            if (laser.y > -20) {
+               handleLaserTick(laser);
+            }
+         }, 50)
+       }
+        // function moveLaser(laser) {
+        //   setTimeout(function(laser){
+        //     if (laser.y > -20) {
+        //       console.log("here");
+        //       moveLaser(laser);
+        //     }
+        //   }, 3000);
+        //
+        // moveLaser(laser);
 
-          function moveLaser() {
-            laser.y -= 10;
-            if (laser.y < 0) {
-              stage.removeChild(laser);
-              Ticker.removeEventListener = "tick";
-             }
-            stage.update();
-          }
-      }
+        // }
+
+        // var Ticker = createjs.Ticker.addEventListener("tick", moveLaser);
+        //
+        // function moveLaser() {
+        //   if (laser.y > -20) {
+        //     laser.y -= 10;
+        //     stage.update();
+        //   }
+        // }
+      // }
 
       function createLaser (x) {
         var laser = new createjs.Shape();
@@ -74,6 +85,8 @@
         stage.addChild(laser);
         handleLaserTick(laser);
       }
+
+      // alien stuff
 
       function setupAliens() {
         let x = 20;
@@ -90,12 +103,28 @@
         stage.update();
       }
 
+      function handleAlienTick(alien) {
+        setTimeout(function () {
+          if (alien.x + 10 + 50 < 600) {
+            alien.x += 10;
+            stage.update();
+            handleAlienTick(alien);
+          } else if (alien.y < 800) {
+            alien.y += 100;
+            alien.x = 20;
+            stage.update();
+            handleAlienTick(alien);
+          }
+        }, 200)
+       }
+
       function createAlien(x, y) {
         var alien = new createjs.Shape();
         alien.graphics.beginFill("Red").drawRect(0,0,50,50);
         alien.x = x;
         alien.y = y;
         stage.addChild(alien);
+        // handleAlienTick(alien); //toggled off alien movement
       }
 
       setupAliens();
