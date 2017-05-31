@@ -64,10 +64,23 @@
           laser.y -= 10;
           stage.update();
             if (laser.y > -20) {
+              for (var i = 0; i < aliens.length; i++) {
+                var pt = laser.localToLocal(0, 0, aliens[i]);
+                // console.log(pt.x, pt.y); // the position local to objB
+                if (aliens[i].hitTest(pt.x, pt.y)) {
+                  console.log("hit");
+                }
+
+                // var pt = arm.localToLocal(100,0,target);
+          			// if (target.hitTest(pt.x, pt.y)) { target.alpha = 1; }
+
+                // if (pt.x < 20 ) {
+                //   console.log("hit");
+                // }
+              }
                handleLaserTick(laser);
             }
          }, 50)
-         console.log(lasers);
        }
 
       // alien stuff
@@ -95,7 +108,7 @@
         alien.y = y;
         aliens.push(alien);
         stage.addChild(alien);
-        handleAlienTick(alien); //toggled off alien movement
+        // handleAlienTick(alien); //toggled off alien movement
       }
 
       function handleAlienTick(alien) {
@@ -108,13 +121,15 @@
             alien.y += 100;
             alien.x = 20;
             stage.update();
-            // handleAlienTick(alien);
+            handleAlienTick(alien);
           }
-        }, 50)
-        console.log(aliens[0].x);
+        }, 100)
       }
 
       setupAliens();
+
+      // createAlien(20,20);
+      // stage.update();
 
       this.document.onkeydown = keyPressed;
 
