@@ -2,7 +2,9 @@ body {
   display: flex;
   align-items: center;
   flex-direction: column;
-  background-image: url("http://space-facts.com/wp-content/uploads/magellanic-clouds.png");
+  background-image: url("../res/space-08.jpg");
+  background-size: 100%;
+  background-position: 50% 50%;
 }
 
 canvas {

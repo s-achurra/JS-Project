@@ -23,6 +23,8 @@
 
       var aliens = [];
       var lasers = [];
+      var timeouts = [];
+      var status = "PLAY";
 
       var KEYCODE_LEFT = 37,
         KEYCODE_RIGHT = 39,
@@ -60,27 +62,30 @@
       }
 
       function handleLaserTick(laser) {
+        timeouts.push (
         setTimeout(function () {
           laser.y -= 10;
           stage.update();
             if (laser.y > -20) {
               for (var i = 0; i < aliens.length; i++) {
                 var pt = laser.localToLocal(0, 0, aliens[i]);
-                // console.log(pt.x, pt.y); // the position local to objB
+                // Check if Hit and remove if Hit
                 if (aliens[i].hitTest(pt.x, pt.y)) {
-                  console.log("hit");
+                  stage.removeChild(aliens[i]);
+                  stage.removeChild(laser);
+                  aliens.splice(i, 1);
+                  laser.y = -20;
+                  if (aliens.length === 0) {
+                    console.log("you win!");
+                    status = "WON";
+                    pauseGame();
+                    console.log(timeouts);
+                  }
                 }
-
-                // var pt = arm.localToLocal(100,0,target);
-          			// if (target.hitTest(pt.x, pt.y)) { target.alpha = 1; }
-
-                // if (pt.x < 20 ) {
-                //   console.log("hit");
-                // }
               }
-               handleLaserTick(laser);
+              handleLaserTick(laser);
             }
-         }, 50)
+         }, 50))
        }
 
       // alien stuff
@@ -108,22 +113,55 @@
         alien.y = y;
         aliens.push(alien);
         stage.addChild(alien);
-        // handleAlienTick(alien); //toggled off alien movement
+        handleAlienTick(alien); //toggled off alien movement
       }
 
       function handleAlienTick(alien) {
+        timeouts.push (
         setTimeout(function () {
-          if (alien.x + 10 + 50 < 600) {
-            alien.x += 10;
-            stage.update();
-            handleAlienTick(alien);
-          } else if (alien.y < 800) {
-            alien.y += 100;
-            alien.x = 20;
-            stage.update();
-            handleAlienTick(alien);
+          for (var i = 0; i < aliens.length; i++) {
+            if (aliens[i].x + 10 + 50 < 600) {
+              aliens[i].x += 10;
+            } else if (aliens[i].y < 800) {
+            aliens[i].y += 100;
+            aliens[i].x = 20;
           }
-        }, 100)
+          var pt = aliens[i].localToLocal(0, 0, cannon);
+          // Check if Hit and remove if Hit
+          if (cannon.hitTest(pt.x, pt.y)) {
+            status = "LOST";
+            pauseGame();
+          }
+        }
+        // if the game is not in play mode don't push more events
+        if (status === "PLAY") {
+          stage.update();
+          handleAlienTick(alien);
+        }
+      }, 1000))
+      }
+
+      // ORIGINAL TICKCER FUNCTION FOR ALIENS
+      // function handleAlienTick(alien) {
+      //   setTimeout(function () {
+      //     if (alien.x + 10 + 50 < 600) {
+      //       alien.x += 10;
+      //       stage.update();
+      //       handleAlienTick(alien);
+      //     } else if (alien.y < 800) {
+      //       alien.y += 100;
+      //       alien.x = 20;
+      //       stage.update();
+      //       handleAlienTick(alien);
+      //     }
+      //   }, 200)
+      // }
+
+      function pauseGame() {
+        for (var i = 0; i < timeouts.length; i++) {
+          clearTimeout(timeouts[i]);
+        }
+        timeouts = [];
       }
 
       setupAliens();
