@@ -1,3 +1,8 @@
+@font-face {
+  font-family: 'gameFont';
+  src: url('../res/fonts/PressStart2P.ttf');
+}
+
 body {
   display: flex;
   align-items: center;
@@ -5,6 +10,7 @@ body {
   background-image: url("../res/space-08.jpg");
   background-size: 100%;
   background-position: 50% 50%;
+  font-family: sans-serif;
 }
 
 canvas {
@@ -40,4 +46,20 @@ img.logo {
   /*justify-content: center;*/
   align-items: center;
   flex-direction: column;
+}
+
+h1 {
+  font-family: 'gameFont', sans-serif;
+  font-size: 36px;
+  text-align: center;
+}
+
+h2 {
+  font-family: 'gameFont', sans-serif;
+  font-size: 24px;
+  text-align: center;
+}
+
+h2:hover {
+  cursor: pointer;
 }

@@ -89,7 +89,6 @@
                   laser.y = -20;
 
                   if (aliens.length === 0) {
-                    console.log("you win!");
                     status = "WON";
                     pauseGame();
                     removeHidden("won");
@@ -181,13 +180,54 @@
 
       function startGame() {
         setupAliens();
-        // document.getElementById("start").className += " hidden";
         addHidden("start");
-        // removeHidden("start");
+      }
+
+      function resetGame() {
+        console.log(lasers);
+        console.log(aliens);
+        if (aliens) {
+          for (var i = 0; i < aliens.length; i++) {
+            stage.removeChild(aliens[i]);
+          }
+        }
+
+        if (lasers) {
+          for (var i = 0; i < lasers.length; i++) {
+            stage.removeChild(lasers[i]);
+          }
+        }
+
+        aliens = [];
+        lasers = [];
+        timeouts = [];
+        status = "PLAY";
+        playerScore = 0;
+        score.text = "Score: " + playerScore;
+        addHidden("loss");
+        setupAliens();
+      }
+
+      function continueGame() {
+        console.log(lasers);
+        console.log(aliens);
+        if (lasers) {
+          for (var i = 0; i < lasers.length; i++) {
+            stage.removeChild(lasers[i]);
+          }
+        }
+        aliens = [];
+        lasers = [];
+        timeouts = [];
+        status = "PLAY";
+        addHidden("won");
+        setupAliens();
       }
 
 
       document.getElementById("startButton").addEventListener("click", startGame);
+      document.getElementById("resetButton").addEventListener("click", resetGame);
+      document.getElementById("continueButton").addEventListener("click", continueGame);
 
       this.document.onkeydown = keyPressed;
 
@@ -205,21 +245,36 @@
       <canvas id="board" width="600" height="800"></canvas>
 
       <div id="start" class="overlay">
-        <h1>START</h1>
-
+        <h1>Welcome to</h1>
+        <h1>Space Invaders!</h1>
+        <h2>How to Play:</h2>
+        <p>
+          Press the RIGHT ARROW key to move right.
+        </p>
+        <p>
+          Press the LEFT ARROW key to move left.
+        </p>
+        <p>
+          Press the SPACE BAR to fire a laser.
+        </p>
         <section class="button" id="startButton">
-          Press to Start
+          <h2>Click here to Start</h2>
         </section>
       </div>
       <div id="loss" class="overlay hidden">
         <h1>YOU LOST!</h1>
+        <section class="button" id="resetButton">
+          <h2>Click here to Reset</h2>
+        </section>
       </div>
       <div id="won" class="overlay hidden">
         <h1>YOU WON!</h1>
+        <section class="button" id="continueButton">
+          <h2>Click here to Play Again</h2>
+        </section>
       </div>
 
     </div>
-
 
   </body>
 </html>
