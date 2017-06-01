@@ -20,8 +20,6 @@
       var playerScore = 0;
 
       var cannon = new createjs.Bitmap("./res/cannon.png");
-      // var cannon = new createjs.Shape();
-      // cannon.graphics.beginFill("DeepSkyBlue").drawRect(0, 0, 100, 50);
       cannon.scaleX = .4;
       cannon.scaleY = .4;
       cannon.x = 250;
@@ -44,17 +42,17 @@
       function keyPressed(event) {
         switch(event.keyCode) {
           case KEYCODE_LEFT:
-          if (cannon.x - 5 > 0) {
-            cannon.x -= 5;
+          if (cannon.x - 10 > 0) {
+            cannon.x -= 10;
           }
             break;
           case KEYCODE_RIGHT:
-          if (cannon.x + 100 + 5 < board.width) {
-            cannon.x += 5;
+          if (cannon.x + 100 + 10 < board.width - 10) {
+            cannon.x += 10;
           }
             break;
           case SPACE:
-            createLaser(cannon.x + 50);
+            createLaser(cannon.x + 60);
             break;
         }
         stage.update();
@@ -130,10 +128,6 @@
         var alien = new createjs.Bitmap("./res/Space_invaders_alien.svg.png");
         alien.scaleX = .03;
         alien.scaleY = .03;
-
-        // Box alien code
-        // alien = new createjs.Shape();
-        // alien.graphics.beginFill("Red").drawRect(0,0,50,50);
         alien.x = x;
         alien.y = y;
         aliens.push(alien);
@@ -178,7 +172,6 @@
             clearTimeout(timeouts[i]);
           }
         }
-        // commenting this out to see if timeouts in an array can be reset
         timeouts = [];
       }
 
@@ -193,7 +186,6 @@
             handleLaserTick(lasers[i]);
           }
         }
-
       }
 
       function togglePause() {
