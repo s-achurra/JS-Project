@@ -19,8 +19,11 @@
       var status = "PLAY";
       var playerScore = 0;
 
-      var cannon = new createjs.Shape();
-      cannon.graphics.beginFill("DeepSkyBlue").drawRect(0, 0, 100, 50);
+      var cannon = new createjs.Bitmap("./res/cannon.png");
+      // var cannon = new createjs.Shape();
+      // cannon.graphics.beginFill("DeepSkyBlue").drawRect(0, 0, 100, 50);
+      cannon.scaleX = .4;
+      cannon.scaleY = .4;
       cannon.x = 250;
       cannon.y = 700;
       stage.addChild(cannon);
@@ -313,7 +316,7 @@
         <br />
         <h1>YOU WON!</h1>
         <section class="button" id="continueButton">
-          <h2>Click here to Play Again</h2>
+          <h2>Click here to Keep Playing</h2>
         </section>
       </div>
 
