@@ -35,7 +35,8 @@
 
       var KEYCODE_LEFT = 37,
         KEYCODE_RIGHT = 39,
-        SPACE = 32;
+        SPACE = 32,
+        ENTER = 13;
 
       function keyPressed(event) {
         switch(event.keyCode) {
@@ -123,8 +124,13 @@
 
 
       function createAlien(x, y) {
-        alien = new createjs.Shape();
-        alien.graphics.beginFill("Red").drawRect(0,0,50,50);
+        var alien = new createjs.Bitmap("./res/Space_invaders_alien.svg.png");
+        alien.scaleX = .03;
+        alien.scaleY = .03;
+
+        // Box alien code
+        // alien = new createjs.Shape();
+        // alien.graphics.beginFill("Red").drawRect(0,0,50,50);
         alien.x = x;
         alien.y = y;
         aliens.push(alien);
@@ -296,6 +302,7 @@
       </div>
 
       <div id="loss" class="overlay hidden">
+        <br />
         <h1>YOU LOST!</h1>
         <section class="button" id="resetButton">
           <h2>Click here to Reset</h2>
@@ -303,6 +310,7 @@
       </div>
 
       <div id="won" class="overlay hidden">
+        <br />
         <h1>YOU WON!</h1>
         <section class="button" id="continueButton">
           <h2>Click here to Play Again</h2>
