@@ -28,7 +28,6 @@ class Laser {
               laser.y = -20;
 
               if (aliens.length === 0) {
-                console.log("you win!");
                 status = "WON";
                 pauseGame();
               }

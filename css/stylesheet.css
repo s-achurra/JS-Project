@@ -60,6 +60,24 @@ h2 {
   text-align: center;
 }
 
-h2:hover {
+h2:hover, h3:hover {
   cursor: pointer;
+}
+
+span {
+  color: yellow;
+}
+
+#controls {
+  display: flex;
+  align-items: flex-end;
+  z-index: 0;
+  background: transparent;
+}
+
+h3 {
+  margin-left: 16px;
+  z-index: -1;
+  font-family: 'gameFont';
+  font-size: 12px;
 }

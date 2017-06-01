@@ -25,9 +25,9 @@
       cannon.y = 700;
       stage.addChild(cannon);
 
-      var score = new createjs.Text("Score: "+playerScore, "20px Arial", "#ffffff");
+      var score = new createjs.Text("Score: "+playerScore, "12px gameFont", "#ffffff");
       score.x = 20;
-      score.y = 20;
+      score.y = 25;
       score.textBaseline = "alphabetic";
       stage.addChild(score);
 
@@ -92,6 +92,7 @@
                     status = "WON";
                     pauseGame();
                     removeHidden("won");
+                    addHidden("pause");
                   }
 
                 }
@@ -147,6 +148,7 @@
             status = "LOST";
             pauseGame();
             removeHidden("loss");
+            addHidden("pause");
           }
         }
         // if the game is not in play mode don't push more events
@@ -162,10 +164,41 @@
 // ##############
 
       function pauseGame() {
-        for (var i = 0; i < timeouts.length; i++) {
-          clearTimeout(timeouts[i]);
+        if (timeouts) {
+          for (var i = 0; i < timeouts.length; i++) {
+            clearTimeout(timeouts[i]);
+          }
         }
+        // commenting this out to see if timeouts in an array can be reset
         timeouts = [];
+      }
+
+      function restartGame() {
+        if (aliens) {
+          for (var i = 0; i < aliens.length; i++) {
+            handleAlienTick(aliens[i]);
+          }
+        }
+        if (lasers) {
+          for (var i = 0; i < lasers.length; i++) {
+            handleLaserTick(lasers[i]);
+          }
+        }
+
+      }
+
+      function togglePause() {
+
+        if (document.getElementById("pause").className === "hidden") {
+          document.getElementById("resume").className = "hidden";
+          document.getElementById("pause").className = "";
+          restartGame();
+        } else {
+          document.getElementById("pause").className = "hidden";
+          document.getElementById("resume").className = "";
+          pauseGame();
+        }
+
       }
 
       function addHidden(id) {
@@ -181,11 +214,10 @@
       function startGame() {
         setupAliens();
         addHidden("start");
+        removeHidden("pause")
       }
 
       function resetGame() {
-        console.log(lasers);
-        console.log(aliens);
         if (aliens) {
           for (var i = 0; i < aliens.length; i++) {
             stage.removeChild(aliens[i]);
@@ -205,12 +237,11 @@
         playerScore = 0;
         score.text = "Score: " + playerScore;
         addHidden("loss");
+        removeHidden("pause")
         setupAliens();
       }
 
       function continueGame() {
-        console.log(lasers);
-        console.log(aliens);
         if (lasers) {
           for (var i = 0; i < lasers.length; i++) {
             stage.removeChild(lasers[i]);
@@ -221,18 +252,19 @@
         timeouts = [];
         status = "PLAY";
         addHidden("won");
+        removeHidden("pause")
         setupAliens();
       }
-
 
       document.getElementById("startButton").addEventListener("click", startGame);
       document.getElementById("resetButton").addEventListener("click", resetGame);
       document.getElementById("continueButton").addEventListener("click", continueGame);
+      document.getElementById("pause").addEventListener("click", togglePause);
+      document.getElementById("resume").addEventListener("click", togglePause);
 
       this.document.onkeydown = keyPressed;
 
     }
-
 
     </script>
 
@@ -242,6 +274,7 @@
     <img class="logo" src="./res/Space_invaders_logo.png"/>
     <br />
     <div id="canvasWrap">
+
       <canvas id="board" width="600" height="800"></canvas>
 
       <div id="start" class="overlay">
@@ -249,29 +282,37 @@
         <h1>Space Invaders!</h1>
         <h2>How to Play:</h2>
         <p>
-          Press the RIGHT ARROW key to move right.
+          Press the <span>RIGHT ARROW</span> key to move right.
         </p>
         <p>
-          Press the LEFT ARROW key to move left.
+          Press the <span>LEFT ARROW</span> key to move left.
         </p>
         <p>
-          Press the SPACE BAR to fire a laser.
+          Press the <span>SPACE BAR</span> to fire a laser.
         </p>
         <section class="button" id="startButton">
           <h2>Click here to Start</h2>
         </section>
       </div>
+
       <div id="loss" class="overlay hidden">
         <h1>YOU LOST!</h1>
         <section class="button" id="resetButton">
           <h2>Click here to Reset</h2>
         </section>
       </div>
+
       <div id="won" class="overlay hidden">
         <h1>YOU WON!</h1>
         <section class="button" id="continueButton">
           <h2>Click here to Play Again</h2>
         </section>
+      </div>
+
+      <div id="controls" class="overlay">
+        <h3 id="pause" class="hidden">PAUSE</h3>
+        <br />
+        <h3 id="resume" class="hidden">RESUME</h3>
       </div>
 
     </div>
