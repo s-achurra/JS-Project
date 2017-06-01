@@ -56,7 +56,9 @@
         stage.update();
       }
 
-      // laser stuff
+// #############
+// ### Lasers ##
+// #############
 
       function createLaser (x) {
         var laser = new createjs.Shape();
@@ -90,6 +92,7 @@
                     console.log("you win!");
                     status = "WON";
                     pauseGame();
+                    removeHidden("won");
                   }
 
                 }
@@ -99,7 +102,9 @@
          }, 50))
        }
 
-      // alien stuff
+ // #############
+ // ### Aliens ##
+ // #############
 
       function setupAliens() {
         let x = 20;
@@ -142,6 +147,7 @@
           if (cannon.hitTest(pt.x, pt.y)) {
             status = "LOST";
             pauseGame();
+            removeHidden("loss");
           }
         }
         // if the game is not in play mode don't push more events
@@ -152,21 +158,9 @@
       }, 1000))
       }
 
-      // ORIGINAL TICKCER FUNCTION FOR ALIENS
-      // function handleAlienTick(alien) {
-      //   setTimeout(function () {
-      //     if (alien.x + 10 + 50 < 600) {
-      //       alien.x += 10;
-      //       stage.update();
-      //       handleAlienTick(alien);
-      //     } else if (alien.y < 800) {
-      //       alien.y += 100;
-      //       alien.x = 20;
-      //       stage.update();
-      //       handleAlienTick(alien);
-      //     }
-      //   }, 200)
-      // }
+// ##############
+// ### Utility ##
+// ##############
 
       function pauseGame() {
         for (var i = 0; i < timeouts.length; i++) {
@@ -175,22 +169,56 @@
         timeouts = [];
       }
 
-      setupAliens();
+      function addHidden(id) {
+        document.getElementById(`${id}`).className += " hidden";
+      }
 
-      // createAlien(20,20);
-      // stage.update();
+      function removeHidden(id) {
+        var classes = document.getElementById(`${id}`).className.split(" ");
+        classes.splice(classes.length - 1, 1);
+        document.getElementById(`${id}`).className = classes.join(" ");
+      }
+
+      function startGame() {
+        setupAliens();
+        // document.getElementById("start").className += " hidden";
+        addHidden("start");
+        // removeHidden("start");
+      }
+
+
+      document.getElementById("startButton").addEventListener("click", startGame);
 
       this.document.onkeydown = keyPressed;
 
     }
 
+
     </script>
+
   </head>
   <body onload="init();">
 
     <img class="logo" src="./res/Space_invaders_logo.png"/>
     <br />
-    <canvas id="board" width="600" height="800"></canvas>
+    <div id="canvasWrap">
+      <canvas id="board" width="600" height="800"></canvas>
+
+      <div id="start" class="overlay">
+        <h1>START</h1>
+
+        <section class="button" id="startButton">
+          Press to Start
+        </section>
+      </div>
+      <div id="loss" class="overlay hidden">
+        <h1>YOU LOST!</h1>
+      </div>
+      <div id="won" class="overlay hidden">
+        <h1>YOU WON!</h1>
+      </div>
+
+    </div>
 
 
   </body>
