@@ -18,15 +18,13 @@ Users can:
 
 ### Project and Design
 
-This project was completed in less than 20 hours over several days.
-
 The initial [proposal](docs/PROPOSAL.md) outlined the goals, vision, and possible layout of the project.
 
 Design of the project reflects a simple and fun rendition of the classic game.
 
 ![PlayScreen](docs/invaders_play.png)
 
-###Technology
+### Technology
 
 The primary tool of this project was JavaScript. While I did utilize EaselJS to upload images and handle collision; movement, game management, and user controls are all handled in plain old JavaScript.
 
@@ -91,7 +89,7 @@ function restartGame() {
 }
 ```
 
-###Future Implementations
+### Future Implementations
 
 Most prominently I would like to DRY up my code and reorganize into an Object Oriented design. This project had a rapid requirement date, so my original focus was to generate a viable product.
 
