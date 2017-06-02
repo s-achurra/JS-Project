@@ -13,13 +13,28 @@ body {
   font-family: sans-serif;
 }
 
+header {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  width: 600px;
+}
+
+.spacer {
+  background-color: transparent;
+  width: 10px;
+  width: 10%;
+}
+
 canvas {
   border: 1px solid white;
 }
 
 img.logo {
+  top: 100px;
   width: 300px;
-  height: auto;
+  height: 126px;
+  width: 40%;
 }
 
 #canvasWrap {
@@ -80,4 +95,17 @@ h3 {
   z-index: -1;
   font-family: 'gameFont';
   font-size: 12px;
+}
+
+i {
+  color: white;
+}
+
+i:hover {
+  color: yellow;
+}
+
+.icons {
+  text-align: right;
+  width: 10%;
 }
