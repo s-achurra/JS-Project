@@ -15,6 +15,7 @@
 
       var aliens = [];
       var lasers = [];
+      var alienLasers = [];
       var timeouts = [];
       var status = "PLAY";
       var playerScore = 0;
@@ -138,12 +139,18 @@
         timeouts.push (
         setTimeout(function () {
           for (var i = 0; i < aliens.length; i++) {
+
             if (aliens[i].x + 10 + 50 < 600) {
               aliens[i].x += 10;
             } else if (aliens[i].y < 800) {
             aliens[i].y += 100;
             aliens[i].x = 20;
           }
+
+          if (Math.random() < .005) {
+            createAlienLaser(aliens[i]);
+          }
+
           var pt = aliens[i].localToLocal(0, 0, cannon);
           // Check if Hit and remove if Hit
           if (cannon.hitTest(pt.x, pt.y)) {
@@ -160,6 +167,40 @@
         }
       }, 2000))
       }
+
+// ###################
+// ### Alien Lasers ##
+// ###################
+
+    function createAlienLaser (alien) {
+      var laser = new createjs.Shape();
+      laser.graphics.beginFill("Green").drawRect(0,0,5,20);
+      laser.x = alien.x;
+      laser.y = alien.y;
+      stage.addChild(laser);
+      alienLasers.push(laser)
+      handleAlienLaserTick(laser);
+    }
+
+    function handleAlienLaserTick(laser) {
+      timeouts.push (
+      setTimeout(function () {
+        laser.y += 10;
+        stage.update();
+          if (laser.y < board.height + 20) {
+            var pt = laser.localToLocal(0,0, cannon);
+            if (cannon.hitTest(pt.x,pt.y)) {
+              status = "LOST";
+              pauseGame();
+              removeHidden("loss");
+              addHidden("pause");
+            }
+            if (status === "PLAY") {
+              handleAlienLaserTick(laser);
+            }
+          }
+       }, 50))
+     }
 
 // ##############
 // ### Utility ##
@@ -183,6 +224,11 @@
         if (lasers) {
           for (var i = 0; i < lasers.length; i++) {
             handleLaserTick(lasers[i]);
+          }
+        }
+        if (alienLasers) {
+          for (var i = 0; i < alienLasers.length; i++) {
+            handleAlienLaserTick(alienLasers[i]);
           }
         }
       }
@@ -229,8 +275,15 @@
           }
         }
 
+        if (alienLasers) {
+          for (var i = 0; i < alienLasers.length; i++) {
+            stage.removeChild(alienLasers[i]);
+          }
+        }
+
         aliens = [];
         lasers = [];
+        alienLasers = [];
         timeouts = [];
         status = "PLAY";
         playerScore = 0;
