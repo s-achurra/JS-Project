@@ -125,7 +125,16 @@ function init() {
     handleAlienTick(alien); //toggled off alien movement
   }
 
+  function calculateAlienSpeed() {
+    if (2000 - (playerScore * 2) < 200) {
+      return 200;
+    } else {
+      return (2000 - (playerScore * 2));
+    }
+  }
+
   function handleAlienTick(alien) {
+
     timeouts.push (
     setTimeout(function () {
       for (var i = 0; i < aliens.length; i++) {
@@ -155,7 +164,7 @@ function init() {
       stage.update();
       handleAlienTick(alien);
     }
-  }, 2000))
+  }, calculateAlienSpeed() ))
   }
 
 // ###################
