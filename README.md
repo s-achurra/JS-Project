@@ -17,7 +17,7 @@ In this implementation of Space Invaders users will be able to:
 
 The play area of this app will fill the entire browser window. In the upper left there will be links to the GitHub repository and a my LinkedIn account. In the upper right will be the players current score. The lower left will hold buttons to pause/resume the game or toggle audio.
 
-![wireframes](space_invaders.png)
+![wireframes](space_invaders_wireframe.png)
 
 ### Architecture and Technologies
 
