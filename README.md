@@ -96,5 +96,5 @@ Most prominently I would like to DRY up my code and reorganize into an Object Or
 Additional Features I'd like to add include:
 - [ ] Add multiple levels with increasing difficulty
 - [ ] Add Music and Audio for Laser fire
-- [ ] Animate alien movement
+- [ ] Animate alien movement and collisions
 - [ ] Rescale for Responsive Design
