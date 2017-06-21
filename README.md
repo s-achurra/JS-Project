@@ -14,7 +14,6 @@ Users can:
 - [ ] Move their laser cannon to the left and right
 - [ ] Shoot at and hit moving alien pieces
 - [ ] Acquire points for alien ships they hit
-- [ ] See faster aliens as their score increases
 - [ ] Have aliens randomly shoot back at them
 
 ### Project and Design
@@ -95,6 +94,7 @@ function restartGame() {
 Most prominently I would like to DRY up my code and reorganize into an Object Oriented design. This project had a rapid requirement date, so my original focus was to generate a viable product.
 
 Additional Features I'd like to add include:
+- [ ] Add multiple levels with increasing difficulty
 - [ ] Add Music and Audio for Laser fire
 - [ ] Animate alien movement and collisions
 - [ ] Rescale for Responsive Design
