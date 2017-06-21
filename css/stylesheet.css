@@ -91,10 +91,6 @@ span {
   background: transparent;
 }
 
-#controls * {
-  position: absolute;
-}
-
 h3 {
   margin-left: 16px;
   z-index: -1;
